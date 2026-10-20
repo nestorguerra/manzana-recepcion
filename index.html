@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eeedf7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Manzana">
+  <meta name="description" content="Registra la recepción de medicamentos. Albaranes, dashboard y Excel, también sin conexión.">
+  <title>Manzana · Recepción de medicamentos</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/xlsx.full.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="svg-defs" aria-hidden="true"><defs>
+    <symbol id="i-apple" viewBox="0 0 32 32"><path d="M17 8c0-4 2.5-6.5 6-6-0.2 3.4-2.5 6-6 6Z" fill="currentColor"/><path d="M16 10c-5-4-12 0-12 7 0 7 5 13 8.5 13 1.7 0 2.3-1 4-1s2.5 1 4 1c3 0 6.5-4.6 7.5-8-5.6-2-6-7.7-1.5-10C23 7.5 19 8 16 10Z" fill="currentColor"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-excel" viewBox="0 0 24 24"><path d="M14 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5M14 8h7M14 13h7M17 3v18"/><path d="m3 5 11-2v18L3 19ZM6 9l5 6M11 9l-5 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5ZM3 8v9l9 5 9-5V8M12 13v9M7 6l9 5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/></symbol>
+  </defs></svg>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div><div class="ambient ambient-three"></div>
+  <div class="app-shell">
+    <aside class="sidebar glass">
+      <a class="brand" href="#inicio" aria-label="Manzana, inicio"><span class="brand-logo"><svg class="apple"><use href="#i-apple"/></svg></span><span>manzana<span class="brand-sub">Control de recepción</span></span></a>
+      <p class="nav-caption">SU ESPACIO DE TRABAJO</p>
+      <nav aria-label="Navegación principal" class="desktop-nav">
+        <button data-view="inicio" class="nav-item active"><svg><use href="#i-grid"/></svg>Vista general</button>
+        <button data-view="entrada" class="nav-item"><svg><use href="#i-plus"/></svg>Nueva entrada</button>
+        <button data-view="registros" class="nav-item"><svg><use href="#i-list"/></svg>Albaranes</button>
+        <button data-view="excel" class="nav-item"><svg><use href="#i-excel"/></svg>Excel y copias</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="local-dot"></span><span>Datos en este dispositivo<small id="sidebar-count">Sin entradas todavía</small></span></div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <a href="#inicio" class="mobile-brand"><svg class="apple"><use href="#i-apple"/></svg><strong>manzana</strong></a>
+        <span class="workspace-label">RECEPCIÓN DE MEDICAMENTOS</span>
+        <button class="button subtle install-button" data-action="install"><svg><use href="#i-phone"/></svg><span>Instalar app</span></button>
+      </header>
+      <div id="storage-error" class="alert error" role="alert" hidden></div>
+      <section id="view-inicio" class="view">
+        <div class="page-heading"><div><p class="eyebrow" id="today-label"></p><h1>Todo en orden.</h1><p>Las entradas, claras. El control, al día.</p></div><button data-view="entrada" class="button primary desktop-new"><svg><use href="#i-plus"/></svg>Nueva entrada</button></div>
+        <div class="overview-top">
+          <article class="hero glass"><div class="hero-copy"><span class="pill"><span class="local-dot"></span>Recepción de hoy</span><div class="hero-total" id="today-count">0</div><h2 id="today-description">entradas registradas</h2><p id="hero-note">Su próxima entrada empieza aquí.</p><button data-view="entrada" class="button dark">Registrar medicamento<svg><use href="#i-arrow"/></svg></button></div><div class="hero-art" aria-hidden="true"><div class="art-orbit"></div><div class="glass-cube cube-back"></div><div class="glass-cube cube-front"><svg><use href="#i-apple"/></svg></div><span class="art-check"><svg><use href="#i-check"/></svg></span><span class="art-small"></span></div></article>
+          <article class="glass week-card"><div class="card-heading"><h2>Esta semana</h2><span class="tiny">Lun — Dom</span></div><div class="week-number"><strong id="week-count">0</strong><span>entradas</span></div><div id="week-chart" class="week-chart" role="img" aria-label="Entradas de esta semana"></div><p class="chart-note">Cada barra representa una recepción.</p></article>
+        </div>
+        <div class="stats-grid">
+          <article class="glass stat"><span class="stat-icon lilac"><svg><use href="#i-list"/></svg></span><div><span>Entradas totales</span><strong id="total-count">0</strong></div></article>
+          <article class="glass stat"><span class="stat-icon mint"><svg><use href="#i-box"/></svg></span><div><span>Medicamentos distintos</span><strong id="medicine-count">0</strong></div></article>
+          <article class="glass stat"><span class="stat-icon peach"><svg><use href="#i-user"/></svg></span><div><span>Personas receptoras</span><strong id="receiver-count">0</strong></div></article>
+        </div>
+        <div class="dashboard-bottom"><article class="glass recent-card"><div class="card-heading"><h2>Últimas entradas</h2><button class="text-button" data-view="registros">Ver todas <span aria-hidden="true">↗</span></button></div><div id="recent-list"></div></article><article class="glass ranking-card"><div class="card-heading"><h2>Más recibidos</h2><span class="tiny">Por entradas</span></div><div id="medicine-ranking"></div><div class="local-note"><svg><use href="#i-check"/></svg>Se guarda en su móvil.<br>Se reúne con Excel.</div></article></div>
+        <p class="footnote">El dashboard muestra las entradas activas de este dispositivo, incluidas las importadas.</p>
+      </section>
+      <section id="view-entrada" class="view" hidden>
+        <div class="page-heading"><div><p class="eyebrow">UN REGISTRO, TRES DATOS</p><h1>Nueva entrada.</h1><p>Deje constancia de lo que acaba de llegar.</p></div></div>
+        <div class="entry-layout"><form id="entry-form" class="glass form-card"><div class="card-heading"><h2>Datos de recepción</h2><span class="pill light">Albarán automático</span></div><label for="medicine">Medicamento</label><input id="medicine" name="medicine" list="medicine-options" placeholder="Ej. Paracetamol 1 g · caja de 20" required maxlength="120" autocomplete="off"><datalist id="medicine-options"></datalist><p class="field-help">Incluya la presentación para distinguir medicamentos.</p><label for="quantity">Cantidad</label><input id="quantity" name="quantity" type="number" inputmode="numeric" min="1" max="1000000" step="1" placeholder="Ej. 12" required><p class="field-help">Número de unidades de la presentación indicada.</p><label for="receiver">Recibido por</label><input id="receiver" name="receiver" list="receiver-options" placeholder="Nombre y apellidos" required maxlength="100" autocomplete="name"><datalist id="receiver-options"></datalist><div class="auto-info"><svg><use href="#i-check"/></svg>Fecha, hora y número de albarán automáticos.</div><p id="form-error" class="form-error" role="alert" hidden></p><button id="save-button" class="button primary wide" type="submit"><svg><use href="#i-check"/></svg>Guardar entrada</button></form><aside class="entry-aside glass"><span class="large-icon"><svg><use href="#i-box"/></svg></span><h2>Recibir.<br>Registrar.<br>Listo.</h2><p>Al guardar, tendrá un albarán que puede consultar e imprimir.</p><div class="aside-rule"></div><p>Sus entradas se guardan en este móvil. Exporte a Excel para conservar una copia o reunir varios dispositivos.</p><button class="text-button" data-view="excel">Ir a Excel y copias <span aria-hidden="true">↗</span></button></aside></div>
+      </section>
+      <section id="view-registros" class="view" hidden>
+        <div class="page-heading"><div><p class="eyebrow">TRAZABILIDAD SENCILLA</p><h1>Sus albaranes.</h1><p>Cada entrada, con su fecha y su responsable.</p></div><button class="button primary" data-action="export"><svg><use href="#i-download"/></svg>Exportar Excel</button></div>
+        <div class="glass filters"><div class="search-field"><svg><use href="#i-search"/></svg><input id="search" aria-label="Buscar albaranes" placeholder="Medicamento, persona o albarán…" type="search"></div><div class="date-filters"><label>Desde<input id="date-from" type="date"></label><label>Hasta<input id="date-to" type="date"></label><label>Estado<select id="status-filter"><option value="active">Activos</option><option value="all">Todos</option><option value="void">Anulados</option></select></label></div></div><div class="list-summary"><span id="filter-summary"></span><button id="clear-filters" class="text-button">Limpiar filtros</button></div><div id="records-list" class="records-list"></div>
+      </section>
+      <section id="view-excel" class="view" hidden>
+        <div class="page-heading"><div><p class="eyebrow">DATOS QUE VAN CON USTED</p><h1>De su móvil a Excel.</h1><p>Una copia, todos los registros. Sin complicaciones.</p></div></div>
+        <div class="excel-grid"><article class="glass excel-card"><span class="large-icon excel-icon"><svg><use href="#i-excel"/></svg></span><h2>Exportar registros</h2><p>Descargue todos sus albaranes en un Excel real (.xlsx), incluidos los anulados. Lleva una hoja de resumen y otra por medicamento.</p><span id="export-summary" class="export-summary"></span><button class="button primary wide" data-action="export"><svg><use href="#i-download"/></svg>Descargar Excel</button></article><article class="glass excel-card"><span class="large-icon lilac"><svg><use href="#i-plus"/></svg></span><h2>Reunir varios móviles</h2><p>Importe sus archivos Excel. Se añaden las entradas nuevas y se omiten los identificadores ya guardados. Sus datos actuales se conservan.</p><button id="import-button" class="button secondary wide"><svg><use href="#i-plus"/></svg>Importar Excel</button><input id="import-file" type="file" accept=".xlsx" hidden><button id="template-button" class="text-button template">Descargar plantilla vacía <span aria-hidden="true">↗</span></button></article></div>
+        <div class="glass info-card"><h2>Un registro local, bajo su control.</h2><p>Los datos se guardan en este navegador o app instalada. No se envían al repositorio ni se sincronizan entre móviles. Si borra los datos del navegador o cambia de dispositivo, necesitará su Excel para recuperarlos.</p><p><strong>Conserve copias periódicas.</strong> Para reunir datos, exporte desde cada móvil e importe esos archivos en un dispositivo de referencia. Los identificadores permiten volver a importar el mismo albarán sin duplicarlo.</p><p>Las filas de plantilla sin identificador reciben uno nuevo. El mismo archivo sin modificar se reconoce; archivos distintos sin identificador pueden contener duplicados. Las anulaciones son locales: un albarán ya importado no se sobrescribe.</p><p class="tiny" id="backup-status">Todavía no ha descargado una copia desde este dispositivo.</p></div>
+        <div class="install-card glass"><div><h2>Llévela en la pantalla de inicio.</h2><p>Para iPhone y Android. Disponible sin conexión tras la primera carga completa.</p></div><button class="button secondary" data-action="install"><svg><use href="#i-phone"/></svg>Instalar app</button></div>
+      </section>
+    </main>
+  </div>
+  <nav class="mobile-nav glass" aria-label="Navegación móvil"><button data-view="inicio" class="active" aria-label="Inicio"><svg><use href="#i-grid"/></svg><span>Inicio</span></button><button data-view="entrada" aria-label="Nueva entrada"><svg><use href="#i-plus"/></svg><span>Entrada</span></button><button data-view="registros" aria-label="Albaranes"><svg><use href="#i-list"/></svg><span>Albaranes</span></button><button data-view="excel" aria-label="Excel"><svg><use href="#i-excel"/></svg><span>Excel</span></button></nav>
+  <dialog id="receipt-dialog"><div class="dialog-toolbar"><span class="eyebrow">ALBARÁN DE RECEPCIÓN</span><button class="icon-button" data-close aria-label="Cerrar albarán"><svg><use href="#i-close"/></svg></button></div><div id="receipt-content"></div><div class="receipt-actions"><button id="print-button" class="button primary">Imprimir / PDF</button><button id="void-button" class="text-button danger">Anular entrada</button></div></dialog>
+  <dialog id="install-dialog"><div class="dialog-toolbar"><span class="eyebrow">SIEMPRE A MANO</span><button class="icon-button" data-close aria-label="Cerrar instalación"><svg><use href="#i-close"/></svg></button></div><span class="large-icon lilac"><svg><use href="#i-phone"/></svg></span><h2>Instale Manzana.</h2><p class="dialog-intro">Se abre como una app, desde su pantalla de inicio.</p><div class="install-steps"><h3>iPhone · Safari</h3><p>Abra esta página en Safari. Pulse <strong>Compartir</strong> y después <strong>Añadir a pantalla de inicio</strong>. Si aparece «Abrir como app web», actívelo.</p><h3>Android · Chrome</h3><p>Abra el menú <strong>⋮</strong> y pulse <strong>Instalar aplicación</strong> o <strong>Añadir a pantalla de inicio</strong>.</p></div><button id="native-install" class="button primary wide" hidden>Instalar ahora</button><p id="offline-status" class="tiny">Preparando el acceso sin conexión…</p><a class="text-button download-source" href="manzana-app.zip" download>Descargar la app en HTML (ZIP) ↗</a></dialog>
+  <dialog id="confirm-dialog"><div class="dialog-toolbar"><span class="eyebrow">REVISAR ACCIÓN</span><button class="icon-button" data-close aria-label="Cerrar confirmación"><svg><use href="#i-close"/></svg></button></div><h2 id="confirm-title"></h2><p id="confirm-message" class="confirm-message"></p><div class="confirm-actions"><button id="confirm-cancel" class="button secondary">Cancelar</button><button id="confirm-ok" class="button primary">Confirmar</button></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="print-area"></div>
+</body>
+</html>
